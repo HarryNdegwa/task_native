@@ -42,7 +42,7 @@ function RegisterScreen(props) {
             <Text>Role</Text>
             <Picker
               selectedValue={role}
-              style={{ height: 50, width: 100 }}
+              style={{ height: 25, width: "100%" }}
               onValueChange={(itemValue, itemIndex) => setRole(itemValue)}
             >
               <Picker.Item label="user" value="USER" />
