@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, Button, TextInput } from "react-native";
 import { Formik } from "formik";
+import { Picker } from "@react-native-picker/picker";
 
 function RegisterScreen(props) {
+  const [role, setRole] = useState("USER");
   return (
     <View>
       <Text>Register</Text>
@@ -38,7 +40,14 @@ function RegisterScreen(props) {
               value={values.phone}
             />
             <Text>Role</Text>
-
+            <Picker
+              selectedValue={role}
+              style={{ height: 50, width: 100 }}
+              onValueChange={(itemValue, itemIndex) => setRole(itemValue)}
+            >
+              <Picker.Item label="user" value="USER" />
+              <Picker.Item label="admin" value="ADMIN" />
+            </Picker>
             <Text>Password</Text>
             <TextInput
               onChangeText={handleChange("password")}
