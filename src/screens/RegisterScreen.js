@@ -6,6 +6,20 @@ import { Picker } from "@react-native-picker/picker";
 function RegisterScreen(props) {
   const [role, setRole] = useState("USER");
   const [image, setImage] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== "web") {
+        const {
+          status,
+        } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need media permissions to make this work!");
+        }
+      }
+    })();
+  }, []);
+
   return (
     <View>
       <Text>Register</Text>
