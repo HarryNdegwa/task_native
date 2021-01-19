@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, Button, TextInput } from "react-native";
 import { Formik } from "formik";
 import { Picker } from "@react-native-picker/picker";
+import * as ImagePicker from "expo-image-picker";
 
 function RegisterScreen(props) {
   const [role, setRole] = useState("USER");
