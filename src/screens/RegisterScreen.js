@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, TextInput } from "react-native";
+import { View, Text, Button, TextInput, Platform } from "react-native";
 import { Formik } from "formik";
 import { Picker } from "@react-native-picker/picker";
 import * as ImagePicker from "expo-image-picker";
@@ -20,6 +20,21 @@ function RegisterScreen(props) {
       }
     })();
   }, []);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+
+    console.log(result);
+  };
 
   return (
     <View>
