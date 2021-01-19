@@ -1,10 +1,41 @@
-import React from "react";
-import { View, Text, Button, TextInput } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, Button, TextInput, Platform } from "react-native";
 import { Formik } from "formik";
+import * as ImagePicker from "expo-image-picker";
+import Constants from "expo-constants";
 import { Picker } from "@react-native-picker/picker";
 import createFormData from "../../formDataUtility";
 
 function EditScreen(props) {
+  const [role, setRole] = useState("USER");
+  const [image, setImage] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== "web") {
+        const {
+          status,
+        } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need media permissions to make this work!");
+        }
+      }
+    })();
+  }, []);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
   return (
     <View>
       <Text>Edit Profile</Text>
@@ -18,6 +49,7 @@ function EditScreen(props) {
             profile: "",
             password: "",
           }}
+          enableReinitialize={true}
           onSubmit={(values) => {
             values.role = role;
             const data = createFormData(image, values);
