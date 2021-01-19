@@ -9,8 +9,10 @@ import createFormData from "../../formDataUtility";
 function EditScreen(props) {
   const [role, setRole] = useState("USER");
   const [image, setImage] = useState(null);
+  const [data, setData] = useState();
 
   useEffect(() => {
+    //   make api request to fetch profile data
     (async () => {
       if (Platform.OS !== "web") {
         const {
@@ -42,12 +44,11 @@ function EditScreen(props) {
       <Formik>
         <Formik
           initialValues={{
-            name: "",
-            email: "",
-            phone: "",
-            role: "",
-            profile: "",
-            password: "",
+            name: (data && data.name) || "",
+            email: (data && data.email) || "",
+            phone: (data && data.phone) || "",
+            role: (data && data.role) || "",
+            profile: (data && data.profile) || "",
           }}
           enableReinitialize={true}
           onSubmit={(values) => {
@@ -87,12 +88,7 @@ function EditScreen(props) {
               </Picker>
               <Text>Profile Image</Text>
               <Button title="Upload Image" onPress={pickImage} />
-              <Text>Password</Text>
-              <TextInput
-                onChangeText={handleChange("password")}
-                onBlur={handleBlur("password")}
-                value={values.password}
-              />
+
               <Button onPress={handleSubmit} title="Register" />
             </View>
           )}
