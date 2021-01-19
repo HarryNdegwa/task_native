@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Button, TextInput } from "react-native";
 import { Formik } from "formik";
 import { Picker } from "@react-native-picker/picker";
 
 function RegisterScreen(props) {
   const [role, setRole] = useState("USER");
+  const [image, setImage] = useState(null);
   return (
     <View>
       <Text>Register</Text>
