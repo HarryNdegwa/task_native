@@ -1,13 +1,12 @@
-import { Platform } from "react-native";
-
-const createFormData = (photo, data) => {
+const createFormData = (photo, body) => {
   const data = new FormData();
+
+  delete body.profile;
 
   data.append("profile", {
     name: photo.fileName,
     type: photo.type,
-    uri:
-      Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", ""),
+    uri: photo.uri,
   });
 
   Object.keys(body).forEach((key) => {

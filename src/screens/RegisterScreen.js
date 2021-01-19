@@ -4,6 +4,7 @@ import { Formik } from "formik";
 import { Picker } from "@react-native-picker/picker";
 import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
+import createFormData from "../../formDataUtility";
 
 function RegisterScreen(props) {
   const [role, setRole] = useState("USER");
@@ -33,8 +34,6 @@ function RegisterScreen(props) {
     if (!result.cancelled) {
       setImage(result.uri);
     }
-
-    console.log(result);
   };
 
   return (
@@ -49,7 +48,11 @@ function RegisterScreen(props) {
           profile: "",
           password: "",
         }}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={(values) => {
+          values.role = role;
+          const data = createFormData(image, values);
+          console.log(data.values());
+        }}
       >
         {({ handleChange, handleBlur, handleSubmit, values }) => (
           <View>
