@@ -3,6 +3,7 @@ import { View, Text, Button, TextInput, Platform } from "react-native";
 import { Formik } from "formik";
 import { Picker } from "@react-native-picker/picker";
 import * as ImagePicker from "expo-image-picker";
+import Constants from "expo-constants";
 
 function RegisterScreen(props) {
   const [role, setRole] = useState("USER");
@@ -79,6 +80,8 @@ function RegisterScreen(props) {
               <Picker.Item label="user" value="USER" />
               <Picker.Item label="admin" value="ADMIN" />
             </Picker>
+            <Text>Profile Image</Text>
+            <Button title="Upload Image" onPress={pickImage} />
             <Text>Password</Text>
             <TextInput
               onChangeText={handleChange("password")}
