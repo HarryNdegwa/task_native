@@ -5,6 +5,25 @@ import { Picker } from "@react-native-picker/picker";
 import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
 import createFormData from "../../formDataUtility";
+import { baseUrl } from "../baseUrl";
+
+const _userSignup = (values) => {
+  if (values) {
+    fetch(`${baseUrl}register/`, {
+      method: "POST",
+      // headers: {
+      //     'Accept': 'application/json',
+      //     'Content-Type': 'application/json'
+      // },
+      body: values,
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        this._onValueChange(STORAGE_KEY, responseData.id_token);
+      })
+      .done();
+  }
+};
 
 function RegisterScreen(props) {
   const [role, setRole] = useState("USER");
