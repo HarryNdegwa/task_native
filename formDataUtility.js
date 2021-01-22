@@ -3,11 +3,7 @@ const createFormData = (photo, body) => {
 
   delete body.profile;
 
-  data.append("profile", {
-    name: photo.fileName,
-    type: photo.type,
-    uri: photo.uri,
-  });
+  data.append("profile", photo);
 
   Object.keys(body).forEach((key) => {
     data.append(key, body[key]);

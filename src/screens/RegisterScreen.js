@@ -20,14 +20,10 @@ const _userSignup = (data) => {
   if (data) {
     fetch(`${baseUrl}register/`, {
       method: "POST",
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
       body: data,
     })
       .then((response) => response.json())
       .then((responseData) => {
-        console.log(responseData.token);
         _onValueChange("@STORAGE_KEY", responseData.token);
       })
       .catch((error) => {
@@ -62,6 +58,7 @@ function RegisterScreen(props) {
     });
 
     if (!result.cancelled) {
+      console.log(result);
       setImage(result.uri);
     }
   };
@@ -81,6 +78,7 @@ function RegisterScreen(props) {
         onSubmit={(values) => {
           values.role = role;
           const data = createFormData(image, values);
+          console.log(data.get("profile"));
           _userSignup(data);
         }}
       >

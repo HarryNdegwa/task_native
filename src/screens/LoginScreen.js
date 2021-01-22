@@ -2,13 +2,38 @@ import React from "react";
 import { View, Text, TextInput, Button } from "react-native";
 import { Formik } from "formik";
 
+import { baseUrl } from "../baseUrl";
+import { _onValueChange } from "./RegisterScreen";
+
+const _userLogin = (data) => {
+  if (data) {
+    fetch(`${baseUrl}login/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        console.log(responseData.token);
+        _onValueChange("@STORAGE_KEY", responseData.token);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+};
+
 function LoginScreen(props) {
   return (
     <View>
       <Text>Login</Text>
       <Formik
         initialValues={{ primary: "", password: "" }}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={(values) => {
+          _userLogin(values);
+        }}
       >
         {({ handleChange, handleBlur, handleSubmit, values }) => (
           <View>

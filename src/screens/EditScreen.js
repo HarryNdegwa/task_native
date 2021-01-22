@@ -6,6 +6,30 @@ import Constants from "expo-constants";
 import { Picker } from "@react-native-picker/picker";
 import createFormData from "../../formDataUtility";
 
+export const _onValueChange = async (item, selectedValue) => {
+  // try {
+  //   await AsyncStorage.setItem(item, selectedValue);
+  // } catch (error) {
+  //   console.log("AsyncStorage error: " + error.message);
+  // }
+};
+
+const _editProfile = (data) => {
+  if (data) {
+    fetch(`${baseUrl}profile/`, {
+      method: "POST",
+      body: data,
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        _onValueChange();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+};
+
 function EditScreen(props) {
   const [role, setRole] = useState("USER");
   const [image, setImage] = useState(null);
@@ -54,7 +78,7 @@ function EditScreen(props) {
           onSubmit={(values) => {
             values.role = role;
             const data = createFormData(image, values);
-            console.log(data.values());
+            _editProfile(data);
           }}
         >
           {({ handleChange, handleBlur, handleSubmit, values }) => (
