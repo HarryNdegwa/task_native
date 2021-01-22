@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, Image } from "react-native";
 import { baseUrl } from "../baseUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -36,7 +36,12 @@ function HomeScreen(props) {
           <Text>Email:{data.email}</Text>
           <Text>Phone:{data.phone}</Text>
           <Text>Role:{data.role}</Text>
-          <Text>Profile Image:{data.image}</Text>
+          <Text>Profile Image</Text>
+          <Image
+            source={{
+              uri: data.profile,
+            }}
+          />
           <Button
             title="Edit Profile"
             onPress={() => props.navigation.navigate("Edit")}
