@@ -5,6 +5,8 @@ import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
 import { Picker } from "@react-native-picker/picker";
 import createFormData from "../../formDataUtility";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { baseUrl } from "../baseUrl";
 
 export const _onValueChange = async (item, selectedValue) => {
   // try {
@@ -14,14 +16,17 @@ export const _onValueChange = async (item, selectedValue) => {
   // }
 };
 
-const _editProfile = (data) => {
+const _editProfile = async (data) => {
+  var TOKEN = await AsyncStorage.getItem("@STORAGE_KEY");
   if (data) {
     fetch(`${baseUrl}profile/`, {
       method: "POST",
       body: data,
+      headers: {
+        Authorization: "Bearer " + TOKEN,
+      },
     })
-      .then((response) => response.json())
-      .then((responseData) => {
+      .then((response) => {
         _onValueChange();
       })
       .catch((error) => {
@@ -37,6 +42,25 @@ function EditScreen(props) {
 
   useEffect(() => {
     //   make api request to fetch profile data
+    const _getProfileData = async () => {
+      var TOKEN = await AsyncStorage.getItem("@STORAGE_KEY");
+      fetch(`${baseUrl}profile/`, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + TOKEN,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setData(data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+
+    _getProfileData();
+
     (async () => {
       if (Platform.OS !== "web") {
         const {

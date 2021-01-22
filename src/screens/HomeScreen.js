@@ -16,7 +16,6 @@ function HomeScreen(props) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setData(data);
       })
       .catch((error) => {
@@ -27,8 +26,6 @@ function HomeScreen(props) {
   useEffect(() => {
     _getProfileData();
   }, []);
-
-  console.log(data);
 
   return (
     <View>
