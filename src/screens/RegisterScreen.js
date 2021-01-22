@@ -16,7 +16,7 @@ export const _onValueChange = async (item, selectedValue) => {
   }
 };
 
-const _userSignup = (data) => {
+const _userSignup = (data, navigator) => {
   if (data) {
     fetch(`${baseUrl}register/`, {
       method: "POST",
@@ -25,6 +25,7 @@ const _userSignup = (data) => {
       .then((response) => response.json())
       .then((responseData) => {
         _onValueChange("@STORAGE_KEY", responseData.token);
+        navigator.navigate("Home");
       })
       .catch((error) => {
         console.error(error);
@@ -58,7 +59,6 @@ function RegisterScreen(props) {
     });
 
     if (!result.cancelled) {
-      console.log(result);
       setImage(result.uri);
     }
   };
@@ -78,8 +78,7 @@ function RegisterScreen(props) {
         onSubmit={(values) => {
           values.role = role;
           const data = createFormData(image, values);
-          console.log(data.get("profile"));
-          _userSignup(data);
+          _userSignup(data, props.navigation);
         }}
       >
         {({ handleChange, handleBlur, handleSubmit, values }) => (
