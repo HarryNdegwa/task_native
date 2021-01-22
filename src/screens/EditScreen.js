@@ -8,15 +8,7 @@ import createFormData from "../../formDataUtility";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { baseUrl } from "../baseUrl";
 
-export const _onValueChange = async (item, selectedValue) => {
-  // try {
-  //   await AsyncStorage.setItem(item, selectedValue);
-  // } catch (error) {
-  //   console.log("AsyncStorage error: " + error.message);
-  // }
-};
-
-const _editProfile = async (data) => {
+const _editProfile = async (data, navigator) => {
   var TOKEN = await AsyncStorage.getItem("@STORAGE_KEY");
   if (data) {
     fetch(`${baseUrl}profile/`, {
@@ -27,7 +19,7 @@ const _editProfile = async (data) => {
       },
     })
       .then((response) => {
-        _onValueChange();
+        navigator.navigate("Home");
       })
       .catch((error) => {
         console.error(error);
@@ -102,7 +94,7 @@ function EditScreen(props) {
           onSubmit={(values) => {
             values.role = role;
             const data = createFormData(image, values);
-            _editProfile(data);
+            _editProfile(data, props.navigation);
           }}
         >
           {({ handleChange, handleBlur, handleSubmit, values }) => (
