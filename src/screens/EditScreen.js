@@ -127,7 +127,7 @@ function EditScreen(props) {
                 <Picker.Item label="admin" value="ADMIN" />
               </Picker>
               <Text>Profile Image</Text>
-              <Button title="Upload Image" onPress={pickImage} />
+              <Button title="Change Image" onPress={pickImage} />
 
               <Button onPress={handleSubmit} title="Register" />
             </View>
