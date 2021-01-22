@@ -120,6 +120,9 @@ function RegisterScreen(props) {
               value={values.password}
             />
             <Button onPress={handleSubmit} title="Register" />
+            <Text onPress={() => props.navigation.navigate("Login")}>
+              Login
+            </Text>
           </View>
         )}
       </Formik>
