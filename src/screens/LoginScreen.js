@@ -5,7 +5,7 @@ import { Formik } from "formik";
 import { baseUrl } from "../baseUrl";
 import { _onValueChange } from "./RegisterScreen";
 
-const _userLogin = (data) => {
+const _userLogin = (data, navigator) => {
   if (data) {
     fetch(`${baseUrl}login/`, {
       method: "POST",
@@ -16,8 +16,8 @@ const _userLogin = (data) => {
     })
       .then((response) => response.json())
       .then((responseData) => {
-        console.log(responseData.token);
         _onValueChange("@STORAGE_KEY", responseData.token);
+        navigator.navigate("Home");
       })
       .catch((error) => {
         console.error(error);
@@ -32,7 +32,7 @@ function LoginScreen(props) {
       <Formik
         initialValues={{ primary: "", password: "" }}
         onSubmit={(values) => {
-          _userLogin(values);
+          _userLogin(values, props.navigation);
         }}
       >
         {({ handleChange, handleBlur, handleSubmit, values }) => (
