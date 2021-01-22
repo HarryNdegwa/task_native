@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, TextInput, Platform } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  TextInput,
+  Platform,
+  StyleSheet,
+} from "react-native";
 import { Formik } from "formik";
 import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
@@ -129,7 +136,11 @@ function EditScreen(props) {
               <Text>Profile Image</Text>
               <Button title="Change Image" onPress={pickImage} />
 
-              <Button onPress={handleSubmit} title="Register" />
+              <Button
+                style={styles.updateBtn}
+                onPress={handleSubmit}
+                title="Update"
+              />
             </View>
           )}
         </Formik>
@@ -137,5 +148,11 @@ function EditScreen(props) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  updateBtn: {
+    marginTop: 10,
+  },
+});
 
 export default EditScreen;
