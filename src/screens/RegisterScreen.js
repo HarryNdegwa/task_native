@@ -6,22 +6,33 @@ import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
 import createFormData from "../../formDataUtility";
 import { baseUrl } from "../baseUrl";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const _userSignup = (values) => {
-  if (values) {
+export const _onValueChange = async (item, selectedValue) => {
+  try {
+    await AsyncStorage.setItem(item, selectedValue);
+  } catch (error) {
+    console.log("AsyncStorage error: " + error.message);
+  }
+};
+
+const _userSignup = (data) => {
+  if (data) {
     fetch(`${baseUrl}register/`, {
       method: "POST",
-      // headers: {
-      //     'Accept': 'application/json',
-      //     'Content-Type': 'application/json'
-      // },
-      body: values,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      body: data,
     })
       .then((response) => response.json())
       .then((responseData) => {
-        this._onValueChange(STORAGE_KEY, responseData.id_token);
+        console.log(responseData.token);
+        _onValueChange("@STORAGE_KEY", responseData.token);
       })
-      .done();
+      .catch((error) => {
+        console.error(error);
+      });
   }
 };
 
@@ -70,7 +81,7 @@ function RegisterScreen(props) {
         onSubmit={(values) => {
           values.role = role;
           const data = createFormData(image, values);
-          console.log(data.values());
+          _userSignup(data);
         }}
       >
         {({ handleChange, handleBlur, handleSubmit, values }) => (
